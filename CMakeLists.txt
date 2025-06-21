@@ -4,8 +4,12 @@ project(design_patterns_cpp)
 set(CMAKE_CXX_STANDARD 26)
 
 add_executable(test
+
         test/main.cpp
+
         object_pool/properties.cpp
+        thread_pool/ThreadPool.cpp
+        thread_pool/properties.cpp
 )
 
 target_include_directories(test
