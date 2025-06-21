@@ -2,8 +2,8 @@
 // Created by Nydus0 on 21/06/2025.
 //
 
-#ifndef object_pool_LargeObject_H
-#define object_pool_LargeObject_H
+#ifndef object_pool_properties_H
+#define object_pool_properties_H
 
 #include <array>
 #include <string>
