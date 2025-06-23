@@ -6,20 +6,53 @@
 #define thread_pool_ThreadPool_H
 
 #include <condition_variable>
+#include <functional>
+#include <future>
 #include <mutex>
+#include <queue>
 #include <thread>
-#include <vector>
 
 class ThreadPool {
 public:
     explicit ThreadPool(size_t nbThreads);
+    ~ThreadPool();
+
+    template<typename F, typename... Args>
+    auto enqueue(F &&f, Args &&... args) -> std::future<typename std::invoke_result<F, Args...>::type>;
 
 private:
+    void workerLoop();
+
     size_t NB_THREADS{};
-    std::vector<std::thread> _pool;
-    std::condition_variable cv;
-    std::mutex guard;
+    std::atomic_bool _stop;
+    std::vector<std::thread> _workers;
+    std::queue<std::function<void()>> _tasks;
+    std::condition_variable _queue_condition;
+    std::mutex _queue_mutex;
+
 };
+
+template<class F, class... Args>
+auto ThreadPool::enqueue(F&& f, Args&&... args)
+    -> std::future<typename std::invoke_result<F, Args...>::type> {
+
+    using return_type = typename std::invoke_result<F, Args...>::type;
+
+    auto task = std::make_shared<std::packaged_task<return_type()>>(
+        std::bind(std::forward<F>(f), std::forward<Args>(args)...)
+    );
+    std::future<return_type> res = task->get_future();
+
+    {
+        std::unique_lock lock(_queue_mutex);
+        if (_stop) { throw std::runtime_error("enqueue on stopped ThreadPool"); }
+
+        _tasks.emplace([task]() { (*task)(); });
+    }
+
+    _queue_condition.notify_one();
+    return res;
+}
 
 
 
