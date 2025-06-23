@@ -5,8 +5,8 @@
 #include "thread_pool/ThreadPool.hpp"
 
 
-ThreadPool::ThreadPool(size_t nbThreads) : NB_THREADS(std::thread::hardware_concurrency()), _stop(false) {
-    for (size_t i = 0; i < nbThreads; i++) {
+ThreadPool::ThreadPool(size_t nbWorkers) {
+    for (size_t i = 0; i < nbWorkers; i++) {
         _workers.emplace_back([this]() { this->workerLoop(); });
     }
 }

@@ -14,7 +14,7 @@
 
 class ThreadPool {
 public:
-    explicit ThreadPool(size_t nbThreads);
+    explicit ThreadPool(size_t nbWorkers);
     ~ThreadPool();
 
     template<typename F, typename... Args>
@@ -24,12 +24,11 @@ private:
     void workerLoop();
 
     size_t NB_THREADS{};
-    std::atomic_bool _stop;
+    std::atomic_bool _stop {false};
     std::vector<std::thread> _workers;
     std::queue<std::function<void()>> _tasks;
     std::condition_variable _queue_condition;
     std::mutex _queue_mutex;
-
 };
 
 template<class F, class... Args>
