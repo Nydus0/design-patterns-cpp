@@ -2,12 +2,11 @@
 // Created by Nydus0 on 21/06/2025.
 //
 
-#ifndef thread_pool_properties_H
-#define thread_pool_properties_H
+#pragma once
 
 #include <string>
 
 int print_sum(int a, int b);
 std::string greet(const std::string& name);
 
-#endif
+std::string myFunction(int x, double y, const std::string& z);

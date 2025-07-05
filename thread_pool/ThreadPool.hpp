@@ -2,8 +2,7 @@
 // Created by Nydus0 on 21/06/2025.
 //
 
-#ifndef thread_pool_ThreadPool_H
-#define thread_pool_ThreadPool_H
+#pragma once
 
 #include <condition_variable>
 #include <functional>
@@ -52,7 +51,3 @@ auto ThreadPool::enqueue(F&& f, Args&&... args)
     _queue_condition.notify_one();
     return res;
 }
-
-
-
-#endif

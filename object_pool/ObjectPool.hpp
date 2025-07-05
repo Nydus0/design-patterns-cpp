@@ -2,8 +2,7 @@
 // Created by Nydus0 on 21/06/2025.
 //
 
-#ifndef object_pool_ObjectPool_H
-#define object_pool_ObjectPool_H
+#pragma once
 
 #include <concepts>
 #include <map>
@@ -122,6 +121,3 @@ private:
     std::map<Key, std::unique_ptr<T> > _storedObjects;
     std::stack<std::unique_ptr<T> > _freeObjects;
 };
-
-
-#endif

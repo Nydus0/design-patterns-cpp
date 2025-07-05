@@ -10,6 +10,8 @@ add_executable(test
         object_pool/properties.cpp
         thread_pool/ThreadPool.cpp
         thread_pool/properties.cpp
+        thread_pool/pool_manager/PoolManager.cpp
+        thread_pool/pool_manager/PoolRequest.cpp
 )
 
 target_include_directories(test

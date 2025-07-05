@@ -2,8 +2,10 @@
 
 #include "object_pool/properties.hpp"
 #include "object_pool/ObjectPool.hpp"
+
 #include "thread_pool/properties.hpp"
 #include "thread_pool/ThreadPool.hpp"
+#include "thread_pool/pool_manager/PoolRequest.hpp"
 
 using namespace std;
 
@@ -47,6 +49,22 @@ int main() {
     std::cout << "Result of task 2: " << f2.get() << "\n";
     std::cout << "Result of task 3: " << f3.get() << "\n";
     std::cout << "cannot print result of task 4 as returns void " << "\n";
+
+
+    ThreadPool pool(4);
+
+    PoolRequest fargs(PoolManager::POOL_TYPE::TYPE_1, 10, 2.9, "OK");
+
+    // unpack args and forward args into enqueue
+    auto result = std::apply(
+        [&](auto&&... unpackedArgs) {
+            return pool.enqueue(myFunction, std::forward<decltype(unpackedArgs)>(unpackedArgs)...);
+        },
+        fargs.getArgs()
+    );
+
+    std::cout << result.get() << "\n";
+
 
     std::cout << "=== end test thread pool ===" << std::endl;
     return 0;
