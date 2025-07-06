@@ -25,7 +25,7 @@ public:
         : _type(t), _args(std::move(a)) {}
 
     [[nodiscard]] POOL_TYPE getPoolType() const;
-    [[nodiscard]] Arguments getArgs() const;
+    [[nodiscard]] const Arguments& getArgs() const;
 
 private:
     POOL_TYPE _type;

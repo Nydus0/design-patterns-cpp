@@ -12,7 +12,10 @@ ThreadPool::ThreadPool(const size_t nbWorkers) {
 }
 
 ThreadPool::~ThreadPool() {
-    _stop = true;
+    {
+        std::unique_lock lock(_queue_mutex);
+        _stop = true;
+    }
     _queue_condition.notify_all();
     for (auto &worker: _workers) { worker.join(); }
 }

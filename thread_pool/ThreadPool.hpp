@@ -75,7 +75,7 @@ auto ThreadPool::invoke_tuple_impl(F&& f, const Arguments& args, std::index_sequ
     return invoke_impl<F, std::tuple_element_t<I, Tuple>...>(
         std::forward<F>(f),
         args.getAll(),
-        std::index_sequence_for<std::tuple_element_t<I, Tuple>...>{}
+        std::index_sequence<I...> {}
     );
 }
 

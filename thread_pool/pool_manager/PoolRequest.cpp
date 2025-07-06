@@ -8,6 +8,6 @@ PoolRequest::POOL_TYPE PoolRequest::getPoolType() const {
     return _type;
 }
 
-Arguments PoolRequest::getArgs() const {
+const Arguments& PoolRequest::getArgs() const {
     return _args;
 }
