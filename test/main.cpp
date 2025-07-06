@@ -54,22 +54,33 @@ int main() {
     */
 
 
-    ThreadPool pool(4);
-
     PoolManager manager;
 
-    // Create the argument holder
+    // Create the argument holders
     Arguments args;
     args.add(3);
     args.add(5);
 
+    Arguments args2;
+    args2.add(3);
+    args2.add(4);
+
+    Arguments args3;
+    args3.add(string("Coco"));
+
     // Package them in a request
     const PoolRequest request(PoolRequest::POOL_TYPE::COMPUTE, args);
+    const PoolRequest request2(PoolRequest::POOL_TYPE::LOGGING, args2);
+    const PoolRequest request3(PoolRequest::POOL_TYPE::COMPUTE, args3);
 
     // Submit the function and get the result
     auto future = manager.submit(request, add);
+    auto future2 = manager.submit(request2, print_sum);
+    auto future3 = manager.submit(request3, greet);
 
-    std::cout << "Result: " << future.get() << std::endl;
+    std::cout << "Result future1: " << future.get() << std::endl;
+    std::cout << "Result future2: " << future2.get() << std::endl;
+    std::cout << "Result future3: " << future3.get() << std::endl;
 
     std::cout << "=== end test thread pool ===" << std::endl;
     return 0;
