@@ -1,24 +1,35 @@
- //
+//
 // Created by Nydus0 on 04/07/2025.
 //
 
 #pragma once
 
 #include "thread_pool/ThreadPool.hpp"
+#include "thread_pool/pool_manager/PoolRequest.hpp"
 
 #include <map>
 
- class PoolManager {
- public:
-  enum class POOL_TYPE {
-   TYPE_1,
-   TYPE_2,
-   TYPE_3,
-   TYPE_4,
-   TYPE_DEFAULT
-  };
+class PoolManager {
+    /** @brief
+     * This class receives functions of any type and the pool requests containing function arguments and dispatches
+     * the request to the correct thread pool.
+     * **/
+public:
+    PoolManager();
 
+    template<typename F>
+    auto submit(const PoolRequest &request, F&& f);
 
- private:
-  std::map<POOL_TYPE, ThreadPool *> _pools;
- };
+private:
+    std::map<PoolRequest::POOL_TYPE, std::unique_ptr<ThreadPool> > _pools;
+};
+
+template<typename F>
+auto PoolManager::submit(const PoolRequest &request, F&& f) {
+
+    const auto it = _pools.find(request.getPoolType());
+
+    if (it == _pools.end()) { throw std::runtime_error("Invalid pool type"); }
+
+    return it->second->enqueue(std::forward<F>(f), request.getArgs());
+}

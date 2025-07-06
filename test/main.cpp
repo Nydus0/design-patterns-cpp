@@ -5,6 +5,7 @@
 
 #include "thread_pool/properties.hpp"
 #include "thread_pool/ThreadPool.hpp"
+#include "thread_pool/pool_manager/PoolManager.hpp"
 #include "thread_pool/pool_manager/PoolRequest.hpp"
 
 using namespace std;
@@ -32,6 +33,7 @@ int main() {
 
     std::cout << "=== test thread pool ===" << std::endl;
 
+    /*
     ThreadPool threadPool(4);
 
     auto f1 = threadPool.enqueue(print_sum, 3, 4);
@@ -49,22 +51,25 @@ int main() {
     std::cout << "Result of task 2: " << f2.get() << "\n";
     std::cout << "Result of task 3: " << f3.get() << "\n";
     std::cout << "cannot print result of task 4 as returns void " << "\n";
+    */
 
 
     ThreadPool pool(4);
 
-    PoolRequest fargs(PoolManager::POOL_TYPE::TYPE_1, 10, 2.9, "OK");
+    PoolManager manager;
 
-    // unpack args and forward args into enqueue
-    auto result = std::apply(
-        [&](auto&&... unpackedArgs) {
-            return pool.enqueue(myFunction, std::forward<decltype(unpackedArgs)>(unpackedArgs)...);
-        },
-        fargs.getArgs()
-    );
+    // Create the argument holder
+    Arguments args;
+    args.add(3);
+    args.add(5);
 
-    std::cout << result.get() << "\n";
+    // Package them in a request
+    const PoolRequest request(PoolRequest::POOL_TYPE::COMPUTE, args);
 
+    // Submit the function and get the result
+    auto future = manager.submit(request, add);
+
+    std::cout << "Result: " << future.get() << std::endl;
 
     std::cout << "=== end test thread pool ===" << std::endl;
     return 0;

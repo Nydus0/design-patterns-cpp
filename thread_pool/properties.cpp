@@ -10,6 +10,10 @@ int print_sum(int a, int b) {
     return a + b;
 }
 
+int add(int a, int b) {
+    return a + b;
+}
+
 std::string greet(const std::string& name) {
     return "Hello, " + name;
 }

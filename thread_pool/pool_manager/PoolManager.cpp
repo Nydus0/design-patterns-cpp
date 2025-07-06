@@ -4,14 +4,8 @@
 
 #include "PoolManager.hpp"
 
-/*void PoolManager::attach(POOL_TYPE type, PoolRequest request) {
-
-    auto it = _pools.find(type);
-
-    if (it != _pools.end()) {
-        it->second->updateRequest(request);
-    } else {
-        _pools[type] = std::make_unique<ThreadPool>(request.)
-    }
-
-}*/
+PoolManager::PoolManager() {
+    _pools[PoolRequest::POOL_TYPE::IO] = std::make_unique<ThreadPool>(2);
+    _pools[PoolRequest::POOL_TYPE::COMPUTE] = std::make_unique<ThreadPool>(4);
+    _pools[PoolRequest::POOL_TYPE::LOGGING] = std::make_unique<ThreadPool>(1);
+}

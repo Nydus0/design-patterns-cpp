@@ -4,23 +4,32 @@
 
 #pragma once
 
-#include "thread_pool/pool_manager/PoolManager.hpp"
+#include "thread_pool/pool_manager/Arguments.hpp"
 
-template <typename... Args> class PoolRequest {
+#include <utility>
+
+class PoolRequest {
+    /** @brief
+     * PoolRequest class holds the pool type and the executable function arguments
+     * **/
 
 public:
-    explicit PoolRequest(PoolManager::POOL_TYPE, Args&&... a) :
-    _poolType(PoolManager::POOL_TYPE::TYPE_DEFAULT),
-    _args(std::forward<Args>(a)...) {}
+    enum class POOL_TYPE {
+        IO,
+        COMPUTE,
+        LOGGING
+    };
 
-    const std::tuple<Args...>& getArgs() const { return _args; }
+
+    explicit PoolRequest(const POOL_TYPE t, Arguments a)
+        : _type(t), _args(std::move(a)) {}
+
+    [[nodiscard]] POOL_TYPE getPoolType() const;
+    [[nodiscard]] Arguments getArgs() const;
 
 private:
-    PoolManager::POOL_TYPE _poolType;
-    std::tuple<Args...> _args;
+    POOL_TYPE _type;
+    Arguments _args;
 };
 
-//deduction guide
-template <typename... Args>
-PoolRequest(PoolManager::POOL_TYPE, Args&&...) -> PoolRequest<std::decay_t<Args>...>;
 
