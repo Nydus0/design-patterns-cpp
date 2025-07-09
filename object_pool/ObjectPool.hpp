@@ -29,7 +29,7 @@ class ObjectPool {
        _freeObjects and _storedObjects.
        **/
 public:
-    explicit ObjectPool(size_t poolSize) : _maxPoolSize(poolSize) {}
+    explicit ObjectPool(const size_t poolSize) : _maxPoolSize(poolSize) {}
 
     [[nodiscard]] T *acquire(const Key &key) {
 
