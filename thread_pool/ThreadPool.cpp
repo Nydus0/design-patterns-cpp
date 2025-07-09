@@ -7,7 +7,7 @@
 
 ThreadPool::ThreadPool(const size_t nbWorkers) {
     for (size_t i = 0; i < nbWorkers; i++) {
-        _workers.emplace_back([this]() { this->workerLoop(); });
+        _workers.emplace_back([this] { this->workerLoop(); });
     }
 }
 
