@@ -3,6 +3,17 @@ project(design_patterns_cpp)
 
 set(CMAKE_CXX_STANDARD 26)
 
+# install Gtest dependency
+include(FetchContent)
+FetchContent_Declare(
+        googletest
+        URL https://github.com/google/googletest/archive/7e17b15f1547bb8dd9c2fed91043b7af3437387f.zip
+)
+
+# for windows: prevent overriding the parent project's compiler/linker settings
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+FetchContent_MakeAvailable(googletest)
+
 add_executable(tests
 
         ## tests ##
