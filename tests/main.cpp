@@ -1,12 +1,12 @@
 #include <iostream>
 
-#include "object_pool/properties.hpp"
-#include "object_pool/ObjectPool.hpp"
+#include "modules/object_pool/properties.hpp"
+#include "modules/object_pool/ObjectPool.hpp"
 
-#include "thread_pool/properties.hpp"
-#include "thread_pool/ThreadPool.hpp"
-#include "thread_pool/pool_manager/PoolManager.hpp"
-#include "thread_pool/pool_manager/PoolRequest.hpp"
+#include "modules/thread_pool/properties.hpp"
+#include "modules/thread_pool/ThreadPool.hpp"
+#include "modules/thread_pool/pool_manager/PoolManager.hpp"
+#include "modules/thread_pool/pool_manager/PoolRequest.hpp"
 
 using namespace std;
 
@@ -32,27 +32,6 @@ int main() {
 
 
     std::cout << "=== test thread pool ===" << std::endl;
-
-    /*
-    ThreadPool threadPool(4);
-
-    auto f1 = threadPool.enqueue(print_sum, 3, 4);
-    auto f2 = threadPool.enqueue(greet, "Coco");
-    auto f3 = threadPool.enqueue([](int x) {
-        return "lambda called with " + to_string(x) ;
-    }, 42);
-    auto f4 = threadPool.enqueue([]() {
-        std::this_thread::sleep_for(std::chrono::milliseconds(20));
-    });
-
-    std::cout << "all tasks complete - thread pool ready for destruction " << "\n";
-
-    std::cout << "Result of task 1: " << f1.get() << "\n";
-    std::cout << "Result of task 2: " << f2.get() << "\n";
-    std::cout << "Result of task 3: " << f3.get() << "\n";
-    std::cout << "cannot print result of task 4 as returns void " << "\n";
-    */
-
 
     PoolManager manager;
 

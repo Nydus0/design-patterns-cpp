@@ -2,7 +2,7 @@
 // Created by Nydus0 on 21/06/2025.
 //
 
-#include "thread_pool/properties.hpp"
+#include "modules/thread_pool/properties.hpp"
 
 #include <iostream>
 

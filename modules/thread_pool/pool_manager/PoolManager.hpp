@@ -4,8 +4,8 @@
 
 #pragma once
 
-#include "thread_pool/ThreadPool.hpp"
-#include "thread_pool/pool_manager/PoolRequest.hpp"
+#include "modules/thread_pool/ThreadPool.hpp"
+#include "modules/thread_pool/pool_manager/PoolRequest.hpp"
 
 #include <map>
 

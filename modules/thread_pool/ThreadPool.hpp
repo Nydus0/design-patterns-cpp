@@ -4,8 +4,8 @@
 
 #pragma once
 
-#include "thread_pool/pool_manager/Arguments.hpp"
-#include "thread_pool/pool_manager/function_traits.hpp"
+#include "modules/thread_pool/pool_manager/Arguments.hpp"
+#include "modules/thread_pool/pool_manager/function_traits.hpp"
 
 #include <condition_variable>
 #include <functional>

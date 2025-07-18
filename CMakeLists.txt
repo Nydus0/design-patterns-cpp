@@ -3,22 +3,25 @@ project(design_patterns_cpp)
 
 set(CMAKE_CXX_STANDARD 26)
 
-add_executable(test
+add_executable(tests
 
-        test/main.cpp
+        ## tests ##
+        tests/main.cpp
+
+        ## modules ##
 
         #object pool
-        object_pool/properties.cpp
+        modules/object_pool/properties.cpp
 
         #thread pool
-        thread_pool/ThreadPool.cpp
-        thread_pool/properties.cpp
-        thread_pool/pool_manager/PoolManager.cpp
-        thread_pool/pool_manager/PoolRequest.cpp
-        thread_pool/pool_manager/Arguments.cpp
+        modules/thread_pool/ThreadPool.cpp
+        modules/thread_pool/properties.cpp
+        modules/thread_pool/pool_manager/PoolManager.cpp
+        modules/thread_pool/pool_manager/PoolRequest.cpp
+        modules/thread_pool/pool_manager/Arguments.cpp
 )
 
-target_include_directories(test
+target_include_directories(tests
         PRIVATE
         ${CMAKE_SOURCE_DIR}
 )
