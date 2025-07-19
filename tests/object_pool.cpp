@@ -5,9 +5,19 @@
 #include <gtest/gtest.h>
 
 #include "modules/object_pool/ObjectPool.hpp"
-#include "modules/object_pool/properties.hpp"
 
 constexpr size_t poolSize = 100;
+
+class LargeObject {
+public:
+    void reset() { _arr.fill(""); }
+    std::string name() { return _name; }
+    void setName(const std::string& name) { _name = name; }
+
+private:
+    std::string _name;
+    std::array<std::string, 10000> _arr;
+};
 
 TEST(object_pool, acquire) {
 

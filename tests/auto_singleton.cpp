@@ -5,7 +5,14 @@
 #include <gtest/gtest.h>
 
 #include "modules/auto_singleton/AutoSingleton.hpp"
-#include "modules/auto_singleton/properties.hpp"
+
+class MyService {
+public:
+    MyService()  { std::cout << "MyService created\n"; }
+    ~MyService() { std::cout << "MyService destroyed\n"; }
+
+    void run() { std::cout << "Running service...\n"; }
+};
 
 TEST(auto_singleton, create) {
 

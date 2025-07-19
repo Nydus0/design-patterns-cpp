@@ -4,10 +4,13 @@
 
 #include <gtest/gtest.h>
 
-#include "modules/thread_pool/properties.hpp"
 #include "modules/thread_pool/ThreadPool.hpp"
 #include "modules/thread_pool/pool_manager/PoolManager.hpp"
 #include "modules/thread_pool/pool_manager/PoolRequest.hpp"
+
+int print_sum(const int a, const int b) { return a + b; }
+int add(const int a, const int b) { return a + b; }
+std::string greet(const std::string& name) { return "Hello, " + name; }
 
 TEST(thread_pool, Arguments) {
     Arguments args;
